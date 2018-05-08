@@ -1,3 +1,4 @@
+import os
 import datetime
 from flask import Flask
 from flask_restful import Api
@@ -11,7 +12,8 @@ from flask import jsonify
 app = Flask(__name__)
 app.secret_key = 'markf'
 api = Api(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','sqlite:///data.db')
 app.config['JWT_EXPIRATION_DELTA'] = datetime.timedelta(seconds=86400)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_AUTH_URL_RULE'] = '/login'
